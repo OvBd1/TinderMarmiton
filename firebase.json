@@ -1,0 +1,28 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "tinder-marmiton",
+          "appId": "1:559046730510:android:accca1124a35f287252d5f",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "tinder-marmiton",
+          "configurations": {
+            "android": "1:559046730510:android:accca1124a35f287252d5f",
+            "ios": "1:559046730510:ios:2d150abff9b19aa7252d5f",
+            "macos": "1:559046730510:ios:2d150abff9b19aa7252d5f",
+            "web": "1:559046730510:web:002ade952b780f94252d5f",
+            "windows": "1:559046730510:web:2454ac9517694b39252d5f"
+          }
+        }
+      }
+    }
+  }
+}
