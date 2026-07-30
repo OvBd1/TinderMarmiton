@@ -13,6 +13,7 @@ import 'package:tinder_marmiton/pages/about_page.dart';
 import 'package:tinder_marmiton/pages/auth/login_page.dart';
 import 'package:tinder_marmiton/pages/auth/signup_page.dart';
 import 'package:tinder_marmiton/pages/edit_profile_page.dart';
+import 'package:tinder_marmiton/pages/home_page.dart';
 import 'package:tinder_marmiton/pages/recipe_detail_page.dart';
 import 'package:tinder_marmiton/services/auth_service.dart';
 import 'package:tinder_marmiton/services/favorites_repository.dart';
@@ -255,6 +256,8 @@ const signedInUser = AppUser(
   email: 'yann@example.com',
   displayName: 'Yann Bontrond',
 );
+
+Finder navTab(int index) => find.byKey(navTabKey(index)).last;
 
 TinderMarmitonApp buildApp({
   AuthService? auth,
@@ -608,7 +611,7 @@ void main() {
 
       expect(find.byType(SwipeableCard), findsOneWidget);
 
-      await tester.tap(find.text('Profil'));
+      await tester.tap(navTab(2));
       await tester.pumpAndSettle();
       expect(find.text('Camille'), findsOneWidget);
       expect(find.text('camille@example.com'), findsOneWidget);
@@ -657,7 +660,7 @@ void main() {
       await tester.pumpWidget(buildApp());
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Profil'));
+      await tester.tap(navTab(2));
       await tester.pumpAndSettle();
 
       await tester.scrollUntilVisible(find.text('Déconnexion'), 200);
@@ -677,7 +680,7 @@ void main() {
       await tester.pumpWidget(buildApp());
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Profil'));
+      await tester.tap(navTab(2));
       await tester.pumpAndSettle();
 
       await tester.tap(find.text('Modifier le profil'));
@@ -720,7 +723,7 @@ void main() {
       await auth.signIn(email: 'yann@example.com', password: 'motdepasse');
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Favoris'));
+      await tester.tap(navTab(1));
       await tester.pumpAndSettle();
       expect(find.text('Recette 1'), findsOneWidget);
     });
@@ -734,7 +737,7 @@ void main() {
       await tester.pumpWidget(buildApp(remote: remote));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Favoris'));
+      await tester.tap(navTab(1));
       await tester.pumpAndSettle();
 
       expect(find.text('Tarte au citron'), findsOneWidget);
@@ -748,7 +751,7 @@ void main() {
       await tester.pumpWidget(buildApp(remote: remote));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Favoris'));
+      await tester.tap(navTab(1));
       await tester.pumpAndSettle();
 
       expect(find.byType(CircularProgressIndicator), findsNothing);
@@ -768,7 +771,7 @@ void main() {
       await tester.drag(find.byType(SwipeableCard), const Offset(400, 0));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Favoris'));
+      await tester.tap(navTab(1));
       await tester.pumpAndSettle();
       expect(find.text('Recette 1'), findsOneWidget);
     });
@@ -816,7 +819,7 @@ void main() {
 
       expect(find.text('Recette 2'), findsOneWidget);
 
-      await tester.tap(find.text('Favoris'));
+      await tester.tap(navTab(1));
       await tester.pumpAndSettle();
       expect(find.text('Recette 1'), findsOneWidget);
     });
@@ -832,7 +835,7 @@ void main() {
 
       expect(find.text('Recette 2'), findsOneWidget);
 
-      await tester.tap(find.text('Favoris'));
+      await tester.tap(navTab(1));
       await tester.pumpAndSettle();
       expect(find.text('Aucun favori pour l\'instant'), findsOneWidget);
     });
@@ -865,7 +868,7 @@ void main() {
 
       expect(find.text('Recette 2'), findsOneWidget);
 
-      await tester.tap(find.text('Profil'));
+      await tester.tap(navTab(2));
       await tester.pumpAndSettle();
 
       expect(find.text('Favori'), findsOneWidget);
@@ -878,7 +881,7 @@ void main() {
       await tester.drag(find.byType(SwipeableCard), const Offset(400, 0));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Favoris'));
+      await tester.tap(navTab(1));
       await tester.pumpAndSettle();
       expect(find.text('Recette 1'), findsOneWidget);
 
@@ -893,7 +896,7 @@ void main() {
       await tester.pumpWidget(buildApp());
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Profil'));
+      await tester.tap(navTab(2));
       await tester.pumpAndSettle();
 
       // La ligne « À propos » passe sous la barre de navigation : on remonte
