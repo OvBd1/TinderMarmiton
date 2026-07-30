@@ -6,6 +6,7 @@ import '../models/app_user.dart';
 import '../state/auth_scope.dart';
 import '../state/favorites_store.dart';
 import '../theme/app_theme.dart';
+import '../widgets/app_button.dart';
 import 'about_page.dart';
 import 'edit_profile_page.dart';
 
@@ -62,10 +63,11 @@ class _ProfilePageState extends State<ProfilePage> {
           'retrouveras à la prochaine connexion.',
         ),
         actions: [
-          FilledButton(
+          AppButton(
+            label: 'Se déconnecter',
+            variant: AppButtonVariant.solid,
+            width: 220,
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: FilledButton.styleFrom(backgroundColor: AppColors.red),
-            child: const Text('Se déconnecter'),
           ),
         ],
       ),

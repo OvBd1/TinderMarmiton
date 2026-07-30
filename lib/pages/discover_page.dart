@@ -6,6 +6,7 @@ import '../services/recipe_repository.dart';
 import '../state/favorites_store.dart';
 import '../state/repository_scope.dart';
 import '../theme/app_theme.dart';
+import '../widgets/app_button.dart';
 import '../widgets/recipe_card.dart';
 import '../widgets/swipeable_card.dart';
 import 'recipe_detail_page.dart';
@@ -240,16 +241,12 @@ class _Header extends StatelessWidget {
               ],
             ),
           ),
-          Material(
-            color: Colors.white,
-            shape: const CircleBorder(),
-            elevation: 3,
-            shadowColor: const Color(0x22000000),
-            child: IconButton(
-              onPressed: busy ? null : onReload,
-              tooltip: 'Tirer de nouvelles recettes',
-              icon: const Icon(Icons.casino_outlined, color: AppColors.red),
-            ),
+          AppRoundButton(
+            icon: Icons.casino_outlined,
+            color: AppColors.red,
+            size: 46,
+            tooltip: 'Tirer de nouvelles recettes',
+            onPressed: busy ? null : onReload,
           ),
         ],
       ),
@@ -321,14 +318,12 @@ class _DeckError extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 26),
-            FilledButton.icon(
+            AppButton(
+              label: 'Réessayer',
+              icon: Icons.refresh,
+              variant: AppButtonVariant.solid,
+              width: 220,
               onPressed: onRetry,
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.red,
-                minimumSize: const Size(220, 50),
-              ),
-              icon: const Icon(Icons.refresh),
-              label: const Text('Réessayer'),
             ),
           ],
         ),
@@ -380,14 +375,12 @@ class _DeckExhausted extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 26),
-            FilledButton.icon(
+            AppButton(
+              label: 'Nouvelles recettes',
+              icon: Icons.refresh,
+              variant: AppButtonVariant.solid,
+              width: 220,
               onPressed: onReload,
-              style: FilledButton.styleFrom(
-                backgroundColor: AppColors.red,
-                minimumSize: const Size(220, 50),
-              ),
-              icon: const Icon(Icons.refresh),
-              label: const Text('Nouvelles recettes'),
             ),
           ],
         ),
@@ -414,15 +407,14 @@ class _ActionBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _RoundAction(
+          AppRoundButton(
             icon: Icons.close,
             color: AppColors.nope,
-            size: 62,
             tooltip: 'Passer',
             onPressed: onPass,
           ),
           const SizedBox(width: 22),
-          _RoundAction(
+          AppRoundButton(
             icon: Icons.restaurant_menu,
             color: AppColors.orange,
             size: 50,
@@ -430,52 +422,13 @@ class _ActionBar extends StatelessWidget {
             onPressed: onDetail,
           ),
           const SizedBox(width: 22),
-          _RoundAction(
+          AppRoundButton(
             icon: Icons.favorite,
             color: AppColors.like,
-            size: 62,
             tooltip: 'Ajouter aux favoris',
             onPressed: onFavorite,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _RoundAction extends StatelessWidget {
-  const _RoundAction({
-    required this.icon,
-    required this.color,
-    required this.size,
-    required this.tooltip,
-    required this.onPressed,
-  });
-
-  final IconData icon;
-  final Color color;
-  final double size;
-  final String tooltip;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Tooltip(
-      message: tooltip,
-      child: Material(
-        color: Colors.white,
-        shape: const CircleBorder(),
-        elevation: 6,
-        shadowColor: color.withValues(alpha: 0.35),
-        child: InkWell(
-          customBorder: const CircleBorder(),
-          onTap: onPressed,
-          child: SizedBox(
-            width: size,
-            height: size,
-            child: Icon(icon, color: color, size: size * 0.46),
-          ),
-        ),
       ),
     );
   }

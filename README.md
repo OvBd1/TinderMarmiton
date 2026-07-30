@@ -36,9 +36,16 @@ Projet réalisé dans le cadre du cours Dart/Flutter (IPSSI).
 | `cloud_firestore` | `^6.7.1` |
 | `http` | `^1.6.0` |
 | `shared_preferences` | `^2.5.5` |
+| `bouncy_button` | `^1.0.4` |
 
 Interface en Material 3. La gestion d'état repose uniquement sur le framework
 (`ChangeNotifier` + `InheritedNotifier`), sans package externe.
+
+Les boutons d'action utilisent [`bouncy_button`](https://pub.dev/packages/bouncy_button)
+pour leur relief 3D et leur animation d'enfoncement. Ils passent tous par
+[lib/widgets/app_button.dart](lib/widgets/app_button.dart), qui applique la
+charte graphique (dégradé orange → rouge ou rouge plein, coins à 18, hauteur 54)
+au lieu de configurer le package page par page.
 
 ## Architecture
 
@@ -68,7 +75,7 @@ lib/
 │   ├── profile_page.dart
 │   ├── edit_profile_page.dart
 │   └── about_page.dart        Présentation de l'app, stack et équipe
-├── widgets/                   Composants réutilisables (carte, badge, chips…)
+├── widgets/                   Composants réutilisables (boutons, carte, chips…)
 └── theme/app_theme.dart       Thème Material 3
 ```
 

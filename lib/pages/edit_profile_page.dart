@@ -4,6 +4,7 @@ import '../models/app_user.dart';
 import '../services/auth_service.dart';
 import '../state/auth_scope.dart';
 import '../theme/app_theme.dart';
+import '../widgets/app_button.dart';
 import '../widgets/app_text_field.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -135,20 +136,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           ),
           const SizedBox(height: 18),
-          FilledButton.icon(
-            onPressed: _savingProfile ? null : _saveProfile,
-            style: FilledButton.styleFrom(backgroundColor: AppColors.red),
-            icon: _savingProfile
-                ? const SizedBox(
-                    width: 18,
-                    height: 18,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.2,
-                      color: Colors.white,
-                    ),
-                  )
-                : const Icon(Icons.check),
-            label: const Text('Enregistrer'),
+          AppButton(
+            label: 'Enregistrer',
+            icon: Icons.check,
+            variant: AppButtonVariant.solid,
+            busy: _savingProfile,
+            onPressed: _saveProfile,
           ),
           const SizedBox(height: 34),
           const _SectionLabel('Mot de passe'),
@@ -183,27 +176,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           ),
           const SizedBox(height: 18),
-          OutlinedButton.icon(
-            onPressed: _savingPassword ? null : _savePassword,
-            style: OutlinedButton.styleFrom(
-              minimumSize: const Size.fromHeight(54),
-              foregroundColor: AppColors.red,
-              side: const BorderSide(color: AppColors.red),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-              ),
-            ),
-            icon: _savingPassword
-                ? const SizedBox(
-                    width: 18,
-                    height: 18,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.2,
-                      color: AppColors.red,
-                    ),
-                  )
-                : const Icon(Icons.key_outlined),
-            label: const Text('Changer le mot de passe'),
+          AppButton(
+            label: 'Changer le mot de passe',
+            icon: Icons.key_outlined,
+            variant: AppButtonVariant.outlined,
+            busy: _savingPassword,
+            onPressed: _savePassword,
           ),
         ],
       ),

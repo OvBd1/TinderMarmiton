@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
+import '../../widgets/app_button.dart';
 
 class AuthShell extends StatelessWidget {
   const AuthShell({
@@ -152,31 +153,6 @@ class AuthSubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: busy ? null : AppColors.warmGradient,
-        color: busy ? const Color(0xFFE0D3CD) : null,
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: FilledButton(
-        onPressed: busy ? null : onPressed,
-        style: FilledButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          disabledBackgroundColor: Colors.transparent,
-          foregroundColor: Colors.white,
-          shadowColor: Colors.transparent,
-        ),
-        child: busy
-            ? const SizedBox(
-                width: 22,
-                height: 22,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.4,
-                  color: Colors.white,
-                ),
-              )
-            : Text(label),
-      ),
-    );
+    return AppButton(label: label, busy: busy, onPressed: onPressed);
   }
 }

@@ -19,6 +19,7 @@ import 'package:tinder_marmiton/services/favorites_repository.dart';
 import 'package:tinder_marmiton/services/meal_api.dart';
 import 'package:tinder_marmiton/services/recipe_repository.dart';
 import 'package:tinder_marmiton/services/translation_service.dart';
+import 'package:tinder_marmiton/widgets/app_button.dart';
 import 'package:tinder_marmiton/widgets/swipeable_card.dart';
 
 Map<String, dynamic> rawMeal(String id, String name) {
@@ -544,7 +545,7 @@ void main() {
         find.widgetWithText(TextFormField, 'Mot de passe'),
         'mauvais',
       );
-      await tester.tap(find.widgetWithText(FilledButton, 'Se connecter'));
+      await tester.tap(find.widgetWithText(AppButton, 'Se connecter'));
       await tester.pumpAndSettle();
 
       expect(find.text('E-mail ou mot de passe incorrect.'), findsOneWidget);
@@ -565,7 +566,7 @@ void main() {
         find.widgetWithText(TextFormField, 'Mot de passe'),
         'motdepasse',
       );
-      await tester.tap(find.widgetWithText(FilledButton, 'Se connecter'));
+      await tester.tap(find.widgetWithText(AppButton, 'Se connecter'));
       await tester.pumpAndSettle();
 
       expect(find.byType(LoginPage), findsNothing);
@@ -600,9 +601,9 @@ void main() {
       );
 
       await tester.ensureVisible(
-        find.widgetWithText(FilledButton, 'Créer mon compte'),
+        find.widgetWithText(AppButton, 'Créer mon compte'),
       );
-      await tester.tap(find.widgetWithText(FilledButton, 'Créer mon compte'));
+      await tester.tap(find.widgetWithText(AppButton, 'Créer mon compte'));
       await tester.pumpAndSettle();
 
       expect(find.byType(SwipeableCard), findsOneWidget);
@@ -638,9 +639,9 @@ void main() {
       );
 
       await tester.ensureVisible(
-        find.widgetWithText(FilledButton, 'Créer mon compte'),
+        find.widgetWithText(AppButton, 'Créer mon compte'),
       );
-      await tester.tap(find.widgetWithText(FilledButton, 'Créer mon compte'));
+      await tester.tap(find.widgetWithText(AppButton, 'Créer mon compte'));
       await tester.pumpAndSettle();
 
       expect(
@@ -664,7 +665,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Se déconnecter ?'), findsOneWidget);
-      await tester.tap(find.widgetWithText(FilledButton, 'Se déconnecter'));
+      await tester.tap(find.widgetWithText(AppButton, 'Se déconnecter'));
       await tester.pumpAndSettle();
 
       expect(find.byType(LoginPage), findsOneWidget);
@@ -687,7 +688,7 @@ void main() {
         find.widgetWithText(TextFormField, 'Nom'),
         'Yann B.',
       );
-      await tester.tap(find.widgetWithText(FilledButton, 'Enregistrer'));
+      await tester.tap(find.widgetWithText(AppButton, 'Enregistrer'));
       await tester.pumpAndSettle();
 
       await tester.pageBack();
