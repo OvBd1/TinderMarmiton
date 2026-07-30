@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tinder_marmiton/main.dart';
 import 'package:tinder_marmiton/models/app_user.dart';
 import 'package:tinder_marmiton/models/recipe.dart';
+import 'package:tinder_marmiton/pages/about_page.dart';
 import 'package:tinder_marmiton/pages/auth/login_page.dart';
 import 'package:tinder_marmiton/pages/auth/signup_page.dart';
 import 'package:tinder_marmiton/pages/edit_profile_page.dart';
@@ -885,6 +886,37 @@ void main() {
 
       expect(find.text('Recette 1'), findsNothing);
       expect(find.text('Aucun favori pour l\'instant'), findsOneWidget);
+    });
+
+    testWidgets('la page À propos crédite l\'équipe', (tester) async {
+      await tester.pumpWidget(buildApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Profil'));
+      await tester.pumpAndSettle();
+
+      // La ligne « À propos » passe sous la barre de navigation : on remonte
+      // la liste avant de taper dessus.
+      await tester.drag(find.byType(ListView).last, const Offset(0, -220));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('À propos'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AboutPage), findsOneWidget);
+
+      for (final name in [
+        'Raphael Touzet',
+        'Yanis Bontrond',
+        'Sébastien Gerard',
+      ]) {
+        await tester.scrollUntilVisible(
+          find.text(name),
+          200,
+          scrollable: find.byType(Scrollable).last,
+        );
+        expect(find.text(name), findsOneWidget);
+      }
     });
   });
 }

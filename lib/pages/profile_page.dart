@@ -6,6 +6,7 @@ import '../models/app_user.dart';
 import '../state/auth_scope.dart';
 import '../state/favorites_store.dart';
 import '../theme/app_theme.dart';
+import 'about_page.dart';
 import 'edit_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -71,6 +72,12 @@ class _ProfilePageState extends State<ProfilePage> {
     );
 
     if (confirmed ?? false) await auth.signOut();
+  }
+
+  void _openAbout(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const AboutPage()));
   }
 
   void _openEditProfile(BuildContext context, AppUser user) {
@@ -155,7 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
               _ActionRow(
                 icon: Icons.info_outline,
                 label: 'À propos',
-                onTap: () => _notImplemented(context, 'À propos'),
+                onTap: () => _openAbout(context),
                 isLast: true,
               ),
             ],

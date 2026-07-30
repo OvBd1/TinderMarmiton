@@ -66,7 +66,8 @@ lib/
 │   ├── favorites_page.dart    Liste des favoris
 │   ├── recipe_detail_page.dart
 │   ├── profile_page.dart
-│   └── edit_profile_page.dart
+│   ├── edit_profile_page.dart
+│   └── about_page.dart        Présentation de l'app, stack et équipe
 ├── widgets/                   Composants réutilisables (carte, badge, chips…)
 └── theme/app_theme.dart       Thème Material 3
 ```
@@ -150,7 +151,7 @@ Plateformes configurées côté Firebase : Android, iOS, macOS, Web et Windows.
 flutter test
 ```
 
-39 tests dans [test/app_test.dart](test/app_test.dart), couvrant :
+40 tests dans [test/app_test.dart](test/app_test.dart), couvrant :
 
 - le parsing TheMealDB (ingrédients, découpage des étapes, nettoyage des puces
   et numéros, stabilité des estimations, rejet des recettes incomplètes) ;
@@ -158,7 +159,7 @@ flutter test
 - la fusion local/distant des favoris, le cloisonnement par utilisateur et les
   suppressions hors ligne ;
 - les parcours d'interface : connexion, inscription, swipe, ajout et retrait de
-  favori, déconnexion, édition du profil.
+  favori, déconnexion, édition du profil, page À propos.
 
 Aucun test n'appelle le réseau : `http` est remplacé par un `MockClient`,
 Firestore par une implémentation en mémoire et `SharedPreferences` par son mock.
