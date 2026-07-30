@@ -19,24 +19,27 @@ class InfoChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foreground = onDark ? Colors.white : const Color(0xFF3D3330);
+    final palette = AppPalette.of(context);
+    final foreground = onDark ? Colors.white : palette.ink;
     final iconColor = color ?? (onDark ? Colors.white : AppColors.orange);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: onDark ? Colors.white.withValues(alpha: 0.22) : Colors.white,
+        color: onDark ? Colors.white.withValues(alpha: 0.22) : palette.surface,
         borderRadius: BorderRadius.circular(AppRadius.chip),
-        border: onDark
-            ? Border.all(color: Colors.white.withValues(alpha: 0.35))
-            : Border.all(color: const Color(0xFFEFE2DC)),
+        border: Border.all(
+          color: onDark
+              ? Colors.white.withValues(alpha: 0.35)
+              : palette.border,
+        ),
         boxShadow: onDark
             ? null
-            : const [
+            : [
                 BoxShadow(
-                  color: Color(0x0F000000),
+                  color: palette.cardShadow,
                   blurRadius: 10,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
       ),

@@ -31,6 +31,8 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Scaffold(
       appBar: AppBar(title: const Text('À propos')),
       body: ListView(
@@ -40,7 +42,7 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 26),
           const _SectionLabel('Le principe'),
           const SizedBox(height: 10),
-          const _Card(
+          _Card(
             child: Text(
               'On swipe à droite ce qui donne envie, à gauche ce qui ne donne '
               'pas. Les recettes likées atterrissent dans les favoris, '
@@ -50,7 +52,7 @@ class AboutPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14.5,
                 height: 1.5,
-                color: Color(0xFF554A45),
+                color: palette.inkBody,
               ),
             ),
           ),
@@ -129,7 +131,7 @@ class AboutPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          const _Card(
+          _Card(
             child: Text(
               'État applicatif géré uniquement avec le framework '
               '(ChangeNotifier + InheritedNotifier), sans package externe. '
@@ -139,7 +141,7 @@ class AboutPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 13.5,
                 height: 1.5,
-                color: Color(0xFF7A6B65),
+                color: palette.inkBody,
               ),
             ),
           ),
@@ -170,18 +172,18 @@ class AboutPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 28),
-          const Center(
+          Center(
             child: Text(
               'Projet réalisé dans le cadre du cours Dart / Flutter — IPSSI',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 12.5, color: Color(0xFFA89791)),
+              style: TextStyle(fontSize: 12.5, color: palette.inkGhost),
             ),
           ),
           const SizedBox(height: 6),
-          const Center(
+          Center(
             child: Text(
               'Tinder Marmiton · version $appVersion',
-              style: TextStyle(fontSize: 12.5, color: Color(0xFFA89791)),
+              style: TextStyle(fontSize: 12.5, color: palette.inkGhost),
             ),
           ),
         ],
@@ -283,12 +285,14 @@ class _MemberRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(
         border: isLast
             ? null
-            : const Border(bottom: BorderSide(color: Color(0xFFF5EBE6))),
+            : Border(bottom: BorderSide(color: palette.divider)),
       ),
       child: Row(
         children: [
@@ -317,16 +321,16 @@ class _MemberRow extends StatelessWidget {
               children: [
                 Text(
                   member.name,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15.5,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF3D3330),
+                    color: palette.ink,
                   ),
                 ),
                 const SizedBox(height: 2),
-                const Text(
+                Text(
                   'Développement Dart / Flutter',
-                  style: TextStyle(fontSize: 13, color: Color(0xFF9A8177)),
+                  style: TextStyle(fontSize: 13, color: palette.inkFaint),
                 ),
               ],
             ),
@@ -354,12 +358,14 @@ class _FeatureRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(
         border: isLast
             ? null
-            : const Border(bottom: BorderSide(color: Color(0xFFF5EBE6))),
+            : Border(bottom: BorderSide(color: palette.divider)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -381,19 +387,19 @@ class _FeatureRow extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF3D3330),
+                    color: palette.ink,
                   ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   detail,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13.5,
                     height: 1.35,
-                    color: Color(0xFF9A8177),
+                    color: palette.inkFaint,
                   ),
                 ),
               ],
@@ -422,6 +428,8 @@ class _LinkRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
@@ -430,7 +438,7 @@ class _LinkRow extends StatelessWidget {
         decoration: BoxDecoration(
           border: isLast
               ? null
-              : const Border(bottom: BorderSide(color: Color(0xFFF5EBE6))),
+              : Border(bottom: BorderSide(color: palette.divider)),
         ),
         child: Row(
           children: [
@@ -438,14 +446,10 @@ class _LinkRow extends StatelessWidget {
               width: 38,
               height: 38,
               decoration: BoxDecoration(
-                color: const Color(0xFF3D3330).withValues(alpha: 0.08),
+                color: palette.ink.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(
-                Icons.link,
-                size: 20,
-                color: Color(0xFF3D3330),
-              ),
+              child: Icon(Icons.link, size: 20, color: palette.ink),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -455,10 +459,10 @@ class _LinkRow extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF3D3330),
+                      color: palette.ink,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -466,19 +470,12 @@ class _LinkRow extends StatelessWidget {
                     value,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF9A8177),
-                    ),
+                    style: TextStyle(fontSize: 13, color: palette.inkFaint),
                   ),
                 ],
               ),
             ),
-            const Icon(
-              Icons.copy_rounded,
-              size: 18,
-              color: Color(0xFFBFA79D),
-            ),
+            Icon(Icons.copy_rounded, size: 18, color: palette.inkIcon),
           ],
         ),
       ),
@@ -493,18 +490,20 @@ class _Tag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
       decoration: BoxDecoration(
-        color: AppColors.seed.withValues(alpha: 0.10),
+        color: palette.tagSurface,
         borderRadius: BorderRadius.circular(AppRadius.chip),
       ),
       child: Text(
         label,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 12.5,
           fontWeight: FontWeight.w700,
-          color: Color(0xFFB5432F),
+          color: palette.tagText,
         ),
       ),
     );
@@ -522,12 +521,14 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: palette.surface,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFF0E4DE)),
+        border: Border.all(color: palette.border),
       ),
       child: child,
     );
@@ -543,11 +544,11 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w800,
         letterSpacing: 1.1,
-        color: Color(0xFF9A8177),
+        color: AppPalette.of(context).inkFaint,
       ),
     );
   }

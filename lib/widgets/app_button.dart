@@ -33,7 +33,6 @@ class AppButton extends StatelessWidget {
 
   static const _height = 54.0;
   static const _elevation = 6.0;
-  static const _disabled = Color(0xFFE0D3CD);
 
   /// Hauteur totale occupée : la face du bouton plus son relief.
   static const totalHeight = _height + _elevation;
@@ -55,15 +54,16 @@ class AppButton extends StatelessWidget {
 
   bool get _enabled => onPressed != null && !busy;
 
-  Color get _foreground {
+  Color _foreground(AppPalette palette) {
     if (variant != AppButtonVariant.outlined) {
       return Colors.white;
     }
-    return _enabled ? AppColors.red : _disabled;
+    return _enabled ? palette.brand : palette.buttonDisabled;
   }
 
-  BouncyButtonStyle _style() {
+  BouncyButtonStyle _style(AppPalette palette) {
     const radius = BorderRadius.all(Radius.circular(18));
+    final disabled = palette.buttonDisabled;
 
     return switch (variant) {
       AppButtonVariant.gradient => BouncyButtonStyle(
@@ -71,9 +71,7 @@ class AppButton extends StatelessWidget {
         width: width,
         elevation: _elevation,
         gradient: AppColors.warmGradient,
-        disabledGradient: const LinearGradient(
-          colors: [_disabled, _disabled],
-        ),
+        disabledGradient: LinearGradient(colors: [disabled, disabled]),
         borderRadius: radius,
         shadowDarkness: 0.16,
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -83,7 +81,7 @@ class AppButton extends StatelessWidget {
         width: width,
         elevation: _elevation,
         backgroundColor: AppColors.red,
-        disabledColor: _disabled,
+        disabledColor: disabled,
         borderRadius: radius,
         shadowDarkness: 0.16,
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -92,14 +90,14 @@ class AppButton extends StatelessWidget {
         height: _height,
         width: width,
         elevation: _elevation,
-        backgroundColor: Colors.white,
-        disabledColor: Colors.white,
+        backgroundColor: palette.surface,
+        disabledColor: palette.surface,
         border: Border.all(
-          color: _enabled ? AppColors.red : _disabled,
+          color: _enabled ? palette.brand : disabled,
           width: 1.4,
         ),
         borderRadius: radius,
-        shadowColor: const Color(0xFFF2CFCB),
+        shadowColor: palette.outlinedShadow,
         padding: const EdgeInsets.symmetric(horizontal: 20),
       ),
     };
@@ -107,9 +105,12 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+    final foreground = _foreground(palette);
+
     return BouncyButton(
       onPressed: _enabled ? onPressed : null,
-      style: _style(),
+      style: _style(palette),
       animation: const BouncyButtonAnimation(
         duration: Duration(milliseconds: 90),
         curve: Curves.easeOut,
@@ -121,7 +122,7 @@ class AppButton extends StatelessWidget {
               height: 22,
               child: CircularProgressIndicator(
                 strokeWidth: 2.4,
-                color: _foreground,
+                color: foreground,
               ),
             )
           : Row(
@@ -129,7 +130,7 @@ class AppButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (icon != null) ...[
-                  Icon(icon, size: 20, color: _foreground),
+                  Icon(icon, size: 20, color: foreground),
                   const SizedBox(width: 10),
                 ],
                 Flexible(
@@ -138,7 +139,7 @@ class AppButton extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: _foreground,
+                      color: foreground,
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.2,
@@ -175,6 +176,7 @@ class AppRoundButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
     final enabled = onPressed != null;
     final elevation = size * 0.09;
 
@@ -187,9 +189,15 @@ class AppRoundButton extends StatelessWidget {
           width: size,
           elevation: elevation,
           shape: BoxShape.circle,
-          backgroundColor: Colors.white,
-          disabledColor: Colors.white,
-          shadowColor: Color.lerp(color, Colors.white, 0.62),
+          backgroundColor: palette.surface,
+          disabledColor: palette.surface,
+          // Le relief reprend la couleur de l'icône, éclaircie sur fond clair
+          // et assombrie sur fond sombre pour rester lisible.
+          shadowColor: Color.lerp(
+            color,
+            palette.isDark ? Colors.black : Colors.white,
+            palette.isDark ? 0.5 : 0.62,
+          ),
           padding: EdgeInsets.zero,
         ),
         animation: const BouncyButtonAnimation(

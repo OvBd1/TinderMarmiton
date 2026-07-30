@@ -30,6 +30,14 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
+    OutlineInputBorder border(Color color, [double width = 1]) =>
+        OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: color, width: width),
+        );
+
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
@@ -43,31 +51,16 @@ class AppTextField extends StatelessWidget {
         labelText: label,
         prefixIcon: Icon(icon, size: 20),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: palette.surface,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 18,
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: Color(0xFFEFE2DC)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: Color(0xFFEFE2DC)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.orange, width: 1.6),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.red),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.red, width: 1.6),
-        ),
+        border: border(palette.border),
+        enabledBorder: border(palette.border),
+        focusedBorder: border(AppColors.orange, 1.6),
+        errorBorder: border(AppColors.red),
+        focusedErrorBorder: border(AppColors.red, 1.6),
       ),
     );
   }

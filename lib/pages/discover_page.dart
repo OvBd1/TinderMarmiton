@@ -221,11 +221,11 @@ class _Header extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 16),
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Découvrir',
                   style: TextStyle(
                     fontSize: 30,
@@ -233,10 +233,13 @@ class _Header extends StatelessWidget {
                     letterSpacing: -0.8,
                   ),
                 ),
-                SizedBox(height: 2),
+                const SizedBox(height: 2),
                 Text(
                   'Swipe à droite ce qui te fait envie',
-                  style: TextStyle(fontSize: 14, color: Color(0xFF8A7B75)),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppPalette.of(context).inkMuted,
+                  ),
                 ),
               ],
             ),
@@ -259,15 +262,18 @@ class _DeckLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CircularProgressIndicator(color: AppColors.orange),
-          SizedBox(height: 20),
+          const CircularProgressIndicator(color: AppColors.orange),
+          const SizedBox(height: 20),
           Text(
             'On dresse la table…',
-            style: TextStyle(fontSize: 15, color: Color(0xFF8A7B75)),
+            style: TextStyle(
+              fontSize: 15,
+              color: AppPalette.of(context).inkMuted,
+            ),
           ),
         ],
       ),
@@ -311,9 +317,9 @@ class _DeckError extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14.5,
-                color: Color(0xFF8A7B75),
+                color: AppPalette.of(context).inkMuted,
                 height: 1.45,
               ),
             ),
@@ -364,13 +370,13 @@ class _DeckExhausted extends StatelessWidget {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Retrouve tes coups de cœur dans l\'onglet Favoris, '
               'ou tire une nouvelle série de recettes.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14.5,
-                color: Color(0xFF8A7B75),
+                color: AppPalette.of(context).inkMuted,
                 height: 1.45,
               ),
             ),

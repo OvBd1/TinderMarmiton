@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
                         size: 20,
-                        color: const Color(0xFF9A8177),
+                        color: AppPalette.of(context).inkFaint,
                       ),
                     ),
                   ),
@@ -125,16 +125,19 @@ class _LoginPageState extends State<LoginPage> {
           alignment: WrapAlignment.center,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            const Text(
+            Text(
               'Pas encore de compte ?',
-              style: TextStyle(color: Color(0xFF8A7B75), fontSize: 14.5),
+              style: TextStyle(
+                color: AppPalette.of(context).inkMuted,
+                fontSize: 14.5,
+              ),
             ),
             TextButton(
               onPressed: _busy ? null : _openSignUp,
-              child: const Text(
+              child: Text(
                 'Créer un compte',
                 style: TextStyle(
-                  color: AppColors.red,
+                  color: AppPalette.of(context).brand,
                   fontWeight: FontWeight.w700,
                 ),
               ),

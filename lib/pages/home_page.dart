@@ -17,8 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const _inactive = Color(0xFF9A8F8B);
-
   int _index = 0;
 
   static const _pages = [DiscoverPage(), FavoritesPage(), ProfilePage()];
@@ -33,28 +31,29 @@ class _HomePageState extends State<HomePage> {
       child: Icon(
         selected ? selectedIcon : icon,
         size: 27,
-        color: selected ? Colors.white : _inactive,
+        color: selected ? Colors.white : AppPalette.of(context).inkMuted,
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
     final favoritesCount = FavoritesScope.of(context).count;
     final favoritesSelected = _index == 1;
 
     return Scaffold(
       body: IndexedStack(index: _index, children: _pages),
       bottomNavigationBar: ColoredBox(
-        color: Colors.white,
+        color: palette.surface,
         child: SafeArea(
           top: false,
           child: CurvedNavigationBar(
             index: _index,
             height: 68,
-            color: Colors.white,
+            color: palette.surface,
             buttonBackgroundColor: AppColors.red,
-            backgroundColor: AppColors.background,
+            backgroundColor: palette.background,
             animationCurve: Curves.easeOutCubic,
             animationDuration: const Duration(milliseconds: 350),
             onTap: (value) => setState(() => _index = value),

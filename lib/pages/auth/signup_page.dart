@@ -121,7 +121,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
                         size: 20,
-                        color: const Color(0xFF9A8177),
+                        color: AppPalette.of(context).inkFaint,
                       ),
                     ),
                   ),
@@ -153,16 +153,19 @@ class _SignUpPageState extends State<SignUpPage> {
           alignment: WrapAlignment.center,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            const Text(
+            Text(
               'Déjà inscrit ?',
-              style: TextStyle(color: Color(0xFF8A7B75), fontSize: 14.5),
+              style: TextStyle(
+                color: AppPalette.of(context).inkMuted,
+                fontSize: 14.5,
+              ),
             ),
             TextButton(
               onPressed: _busy ? null : () => Navigator.of(context).pop(),
-              child: const Text(
+              child: Text(
                 'Se connecter',
                 style: TextStyle(
-                  color: AppColors.red,
+                  color: AppPalette.of(context).brand,
                   fontWeight: FontWeight.w700,
                 ),
               ),

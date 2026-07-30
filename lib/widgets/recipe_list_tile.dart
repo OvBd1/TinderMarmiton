@@ -20,6 +20,8 @@ class RecipeListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     Widget thumbnail = SizedBox(
       width: 104,
       height: 104,
@@ -30,7 +32,7 @@ class RecipeListTile extends StatelessWidget {
     }
 
     return Material(
-      color: Colors.white,
+      color: palette.surface,
       borderRadius: BorderRadius.circular(22),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -70,9 +72,9 @@ class RecipeListTile extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           recipe.prepLabel,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
-                            color: Color(0xFF6B5D58),
+                            color: palette.inkBody,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -96,17 +98,13 @@ class RecipeListTile extends StatelessWidget {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.star_rounded,
-                          size: 16,
-                          color: Color(0xFFF5B301),
-                        ),
+                        Icon(Icons.star_rounded, size: 16, color: palette.star),
                         const SizedBox(width: 4),
                         Text(
                           '${recipe.rating.toStringAsFixed(1)} · ${recipe.calories} kcal',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
-                            color: Color(0xFF6B5D58),
+                            color: palette.inkBody,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

@@ -13,6 +13,7 @@ import 'services/translation_service.dart';
 import 'state/auth_scope.dart';
 import 'state/favorites_store.dart';
 import 'state/repository_scope.dart';
+import 'state/theme_scope.dart';
 import 'theme/app_theme.dart';
 
 Future<void> main() async {
@@ -61,9 +62,18 @@ class _TinderMarmitonAppState extends State<TinderMarmitonApp> {
     repository: widget.favorites,
   );
 
+  final ThemeController _theme = ThemeController();
+
+  @override
+  void initState() {
+    super.initState();
+    _theme.load();
+  }
+
   @override
   void dispose() {
     _store.dispose();
+    _theme.dispose();
     super.dispose();
   }
 
@@ -75,11 +85,18 @@ class _TinderMarmitonAppState extends State<TinderMarmitonApp> {
         repository: widget.recipes,
         child: FavoritesScope(
           store: _store,
-          child: MaterialApp(
-            title: 'Tinder Marmiton',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.light(),
-            home: const AuthGate(),
+          child: ThemeScope(
+            controller: _theme,
+            child: Builder(
+              builder: (context) => MaterialApp(
+                title: 'Tinder Marmiton',
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.light(),
+                darkTheme: AppTheme.dark(),
+                themeMode: ThemeScope.of(context).mode,
+                home: const AuthGate(),
+              ),
+            ),
           ),
         ),
       ),

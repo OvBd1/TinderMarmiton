@@ -14,6 +14,7 @@ class RecipeDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
     final favorites = FavoritesScope.of(context);
     final isFavorite = favorites.isFavorite(recipe);
 
@@ -28,15 +29,15 @@ class RecipeDetailPage extends StatelessWidget {
           SliverAppBar(
             expandedHeight: 320,
             pinned: true,
-            backgroundColor: Colors.white,
-            surfaceTintColor: Colors.white,
+            backgroundColor: palette.surface,
+            surfaceTintColor: palette.surface,
             leading: const _CircleBackButton(),
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 12),
                 child: _CircleIconButton(
                   icon: isFavorite ? Icons.favorite : Icons.favorite_border,
-                  color: isFavorite ? AppColors.red : const Color(0xFF3D3330),
+                  color: isFavorite ? AppColors.red : palette.ink,
                   tooltip: isFavorite
                       ? 'Retirer des favoris'
                       : 'Ajouter aux favoris',
@@ -101,9 +102,9 @@ class RecipeDetailPage extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 4),
                         child: Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.star_rounded,
-                              color: Color(0xFFF5B301),
+                              color: palette.star,
                               size: 22,
                             ),
                             const SizedBox(width: 4),
@@ -138,10 +139,10 @@ class RecipeDetailPage extends StatelessWidget {
                   const SizedBox(height: 14),
                   Text(
                     recipe.description,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15.5,
                       height: 1.5,
-                      color: Color(0xFF5C4F4A),
+                      color: palette.inkBody,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -177,9 +178,9 @@ class RecipeDetailPage extends StatelessWidget {
                   const SizedBox(height: 14),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: palette.surface,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: const Color(0xFFF0E4DE)),
+                      border: Border.all(color: palette.border),
                     ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
@@ -245,10 +246,10 @@ class _SectionTitle extends StatelessWidget {
           ),
           child: Text(
             '$count',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w800,
-              color: AppColors.red,
+              color: AppPalette.of(context).brand,
             ),
           ),
         ),
@@ -265,12 +266,14 @@ class _StepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: palette.surface,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFF0E4DE)),
+        border: Border.all(color: palette.border),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,10 +299,10 @@ class _StepCard extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 height: 1.5,
-                color: Color(0xFF3D3330),
+                color: palette.ink,
               ),
             ),
           ),
@@ -324,18 +327,20 @@ class _StatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: palette.surface,
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: const Color(0xFFF0E4DE)),
-          boxShadow: const [
+          border: Border.all(color: palette.border),
+          boxShadow: [
             BoxShadow(
-              color: Color(0x0A000000),
+              color: palette.cardShadow,
               blurRadius: 12,
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -354,7 +359,7 @@ class _StatTile extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 11.5, color: Color(0xFF9A8177)),
+              style: TextStyle(fontSize: 11.5, color: palette.inkFaint),
             ),
           ],
         ),
@@ -371,12 +376,14 @@ class _IngredientRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 13),
       decoration: BoxDecoration(
         border: isLast
             ? null
-            : const Border(bottom: BorderSide(color: Color(0xFFF5EBE6))),
+            : Border(bottom: BorderSide(color: palette.divider)),
       ),
       child: Row(
         children: [
@@ -392,7 +399,7 @@ class _IngredientRow extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: const TextStyle(fontSize: 15, color: Color(0xFF3D3330)),
+              style: TextStyle(fontSize: 15, color: palette.ink),
             ),
           ),
         ],
@@ -408,7 +415,7 @@ class _CircleBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _CircleIconButton(
       icon: Icons.arrow_back,
-      color: const Color(0xFF3D3330),
+      color: AppPalette.of(context).ink,
       tooltip: 'Retour',
       onPressed: () => Navigator.of(context).pop(),
     );
@@ -432,7 +439,7 @@ class _CircleIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Material(
-        color: Colors.white,
+        color: AppPalette.of(context).surface,
         shape: const CircleBorder(),
         elevation: 3,
         shadowColor: const Color(0x33000000),

@@ -198,11 +198,11 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w800,
         letterSpacing: 1.1,
-        color: Color(0xFF9A8177),
+        color: AppPalette.of(context).inkFaint,
       ),
     );
   }

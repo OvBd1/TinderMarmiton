@@ -81,11 +81,14 @@ class FavoritesPage extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               'Glisse une recette vers la gauche pour la retirer',
-              style: TextStyle(fontSize: 14, color: Color(0xFF8A7B75)),
+              style: TextStyle(
+                fontSize: 14,
+                color: AppPalette.of(context).inkMuted,
+              ),
             ),
           ),
           if (store.syncError case final message?)
@@ -132,10 +135,12 @@ class _SyncErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
       child: Material(
-        color: const Color(0xFFFFF4E5),
+        color: palette.warningSurface,
         borderRadius: BorderRadius.circular(14),
         child: InkWell(
           borderRadius: BorderRadius.circular(14),
@@ -156,27 +161,27 @@ class _SyncErrorBanner extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.cloud_off_outlined,
                   size: 20,
-                  color: Color(0xFFB4690E),
+                  color: palette.warningIcon,
                 ),
                 const SizedBox(width: 10),
-                const Expanded(
+                Expanded(
                   child: Text(
                     'Sauvegarde en ligne indisponible. Tes favoris sont '
                     'enregistrés sur cet appareil.',
                     style: TextStyle(
                       fontSize: 13,
-                      color: Color(0xFF8A5A00),
+                      color: palette.warningText,
                       height: 1.3,
                     ),
                   ),
                 ),
-                const Icon(
+                Icon(
                   Icons.chevron_right,
                   size: 20,
-                  color: Color(0xFFB4690E),
+                  color: palette.warningIcon,
                 ),
               ],
             ),
@@ -244,13 +249,13 @@ class _EmptyFavorites extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'File dans l\'onglet Découvrir et swipe à droite '
               'les plats qui te tentent.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14.5,
-                color: Color(0xFF8A7B75),
+                color: AppPalette.of(context).inkMuted,
                 height: 1.45,
               ),
             ),

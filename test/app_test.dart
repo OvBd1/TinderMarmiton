@@ -15,11 +15,13 @@ import 'package:tinder_marmiton/pages/auth/signup_page.dart';
 import 'package:tinder_marmiton/pages/edit_profile_page.dart';
 import 'package:tinder_marmiton/pages/home_page.dart';
 import 'package:tinder_marmiton/pages/recipe_detail_page.dart';
+import 'package:tinder_marmiton/pages/settings_page.dart';
 import 'package:tinder_marmiton/services/auth_service.dart';
 import 'package:tinder_marmiton/services/favorites_repository.dart';
 import 'package:tinder_marmiton/services/meal_api.dart';
 import 'package:tinder_marmiton/services/recipe_repository.dart';
 import 'package:tinder_marmiton/services/translation_service.dart';
+import 'package:tinder_marmiton/state/theme_scope.dart';
 import 'package:tinder_marmiton/widgets/app_button.dart';
 import 'package:tinder_marmiton/widgets/swipeable_card.dart';
 
@@ -258,6 +260,10 @@ const signedInUser = AppUser(
 );
 
 Finder navTab(int index) => find.byKey(navTabKey(index)).last;
+
+/// Luminosité réellement appliquée à l'écran affiché.
+Brightness brightnessOf(WidgetTester tester, Finder page) =>
+    Theme.of(tester.element(page)).brightness;
 
 TinderMarmitonApp buildApp({
   AuthService? auth,
@@ -698,6 +704,106 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Yann B.'), findsOneWidget);
+    });
+  });
+
+  group('Thème', () {
+    test('suit le système tant qu\'aucun thème n\'a été choisi', () async {
+      final controller = ThemeController();
+      await controller.load();
+
+      expect(controller.mode, ThemeMode.system);
+      expect(controller.followsSystem, isTrue);
+      expect(controller.isDark(Brightness.dark), isTrue);
+      expect(controller.isDark(Brightness.light), isFalse);
+    });
+
+    test('mémorise le thème choisi', () async {
+      await ThemeController().setDark(true);
+
+      final relu = ThemeController();
+      await relu.load();
+
+      expect(relu.mode, ThemeMode.dark);
+      expect(relu.followsSystem, isFalse);
+
+      expect(relu.isDark(Brightness.light), isTrue);
+    });
+
+    test('revenir au système oublie le choix enregistré', () async {
+      final controller = ThemeController();
+      await controller.setDark(true);
+      await controller.useSystem();
+
+      final relu = ThemeController();
+      await relu.load();
+
+      expect(relu.mode, ThemeMode.system);
+    });
+
+    testWidgets('l\'interrupteur des paramètres passe l\'application '
+        'en thème sombre', (tester) async {
+      await tester.pumpWidget(buildApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(navTab(2));
+      await tester.pumpAndSettle();
+
+      await tester.ensureVisible(find.text('Paramètres'));
+      await tester.tap(find.text('Paramètres'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(SettingsPage), findsOneWidget);
+      expect(find.text('Thème sombre'), findsOneWidget);
+
+      final page = find.byType(SettingsPage);
+      expect(brightnessOf(tester, page), Brightness.light);
+      expect(tester.widget<Switch>(find.byType(Switch)).value, isFalse);
+
+      await tester.tap(find.byType(Switch));
+      await tester.pumpAndSettle();
+
+      expect(brightnessOf(tester, page), Brightness.dark);
+      expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
+
+      // Et on peut revenir au thème clair avec le même interrupteur.
+      await tester.tap(find.byType(Switch));
+      await tester.pumpAndSettle();
+
+      expect(brightnessOf(tester, page), Brightness.light);
+    });
+
+    testWidgets('le thème sombre s\'applique aussi aux écrans déjà ouverts', (
+      tester,
+    ) async {
+      await tester.pumpWidget(buildApp());
+      await tester.pumpAndSettle();
+
+      await tester.tap(navTab(2));
+      await tester.pumpAndSettle();
+
+      await tester.ensureVisible(find.text('Paramètres'));
+      await tester.tap(find.text('Paramètres'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byType(Switch));
+      await tester.pumpAndSettle();
+
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+
+      expect(brightnessOf(tester, find.byType(HomePage)), Brightness.dark);
+    });
+
+    testWidgets('le thème sombre est retrouvé au lancement suivant', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues({'theme_mode': 'dark'});
+
+      await tester.pumpWidget(buildApp());
+      await tester.pumpAndSettle();
+
+      expect(brightnessOf(tester, find.byType(HomePage)), Brightness.dark);
     });
   });
 

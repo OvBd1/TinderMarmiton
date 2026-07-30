@@ -10,6 +10,8 @@ class FoodImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Image.network(
       url,
       fit: fit,
@@ -19,7 +21,7 @@ class FoodImage extends StatelessWidget {
         if (progress == null) return child;
         final expected = progress.expectedTotalBytes;
         return ColoredBox(
-          color: const Color(0xFFF2E6E0),
+          color: palette.surfaceMuted,
           child: Center(
             child: CircularProgressIndicator(
               strokeWidth: 2.5,
@@ -37,7 +39,7 @@ class FoodImage extends StatelessWidget {
               constraints.maxHeight.isFinite && constraints.maxHeight < 130;
 
           return ColoredBox(
-            color: const Color(0xFFF2E6E0),
+            color: palette.surfaceMuted,
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -45,13 +47,13 @@ class FoodImage extends StatelessWidget {
                   Icon(
                     Icons.restaurant,
                     size: compact ? 26 : 44,
-                    color: const Color(0xFFBFA79D),
+                    color: palette.inkIcon,
                   ),
                   if (!compact) ...[
                     const SizedBox(height: 10),
-                    const Text(
+                    Text(
                       'Image indisponible',
-                      style: TextStyle(color: Color(0xFF9A8177), fontSize: 13),
+                      style: TextStyle(color: palette.inkFaint, fontSize: 13),
                     ),
                   ],
                 ],

@@ -42,9 +42,9 @@ class AuthShell extends StatelessWidget {
                   Text(
                     subtitle,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14.5,
-                      color: Color(0xFF8A7B75),
+                      color: AppPalette.of(context).inkMuted,
                       height: 1.4,
                     ),
                   ),
@@ -88,13 +88,13 @@ class _Logo extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 14),
-        const Text(
+        Text(
           'Tinder Marmiton',
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.w800,
             letterSpacing: -0.3,
-            color: Color(0xFF3D3330),
+            color: AppPalette.of(context).ink,
           ),
         ),
       ],
@@ -109,24 +109,26 @@ class AuthErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brand = AppPalette.of(context).brand;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 18),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: AppColors.red.withValues(alpha: 0.10),
+        color: brand.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.red.withValues(alpha: 0.35)),
+        border: Border.all(color: brand.withValues(alpha: 0.35)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.error_outline, color: AppColors.red, size: 20),
+          Icon(Icons.error_outline, color: brand, size: 20),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
               message,
-              style: const TextStyle(
-                color: AppColors.red,
+              style: TextStyle(
+                color: brand,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 height: 1.35,

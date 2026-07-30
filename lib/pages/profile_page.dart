@@ -9,6 +9,7 @@ import '../theme/app_theme.dart';
 import '../widgets/app_button.dart';
 import 'about_page.dart';
 import 'edit_profile_page.dart';
+import 'settings_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -40,17 +41,6 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
-  void _notImplemented(BuildContext context, String action) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text('« $action » n\'est pas encore disponible.'),
-          duration: const Duration(milliseconds: 1600),
-        ),
-      );
-  }
-
   Future<void> _confirmSignOut(BuildContext context) async {
     final auth = AuthScope.of(context);
 
@@ -80,6 +70,12 @@ class _ProfilePageState extends State<ProfilePage> {
     Navigator.of(
       context,
     ).push(MaterialPageRoute<void>(builder: (_) => const AboutPage()));
+  }
+
+  void _openSettings(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const SettingsPage()));
   }
 
   void _openEditProfile(BuildContext context, AppUser user) {
@@ -140,7 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     : averageRating.toStringAsFixed(1),
                 label: 'Note moy.',
                 icon: Icons.star_rounded,
-                color: const Color(0xFFF5B301),
+                color: AppPalette.of(context).star,
               ),
             ],
           ),
@@ -159,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
               _ActionRow(
                 icon: Icons.settings_outlined,
                 label: 'Paramètres',
-                onTap: () => _notImplemented(context, 'Paramètres'),
+                onTap: () => _openSettings(context),
               ),
               _ActionRow(
                 icon: Icons.info_outline,
@@ -182,10 +178,13 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
           const SizedBox(height: 24),
-          const Center(
+          Center(
             child: Text(
               'Tinder Marmiton · version 0.1.0',
-              style: TextStyle(fontSize: 12.5, color: Color(0xFFA89791)),
+              style: TextStyle(
+                fontSize: 12.5,
+                color: AppPalette.of(context).inkGhost,
+              ),
             ),
           ),
         ],
@@ -304,18 +303,20 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: palette.surface,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: const Color(0xFFF0E4DE)),
-          boxShadow: const [
+          border: Border.all(color: palette.border),
+          boxShadow: [
             BoxShadow(
-              color: Color(0x0A000000),
+              color: palette.cardShadow,
               blurRadius: 12,
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -334,7 +335,7 @@ class _StatCard extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 12, color: Color(0xFF9A8177)),
+              style: TextStyle(fontSize: 12, color: palette.inkFaint),
             ),
           ],
         ),
@@ -352,11 +353,11 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w800,
         letterSpacing: 1.1,
-        color: Color(0xFF9A8177),
+        color: AppPalette.of(context).inkFaint,
       ),
     );
   }
@@ -369,11 +370,13 @@ class _ActionGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: palette.surface,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFF0E4DE)),
+        border: Border.all(color: palette.border),
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(children: children),
@@ -398,7 +401,8 @@ class _ActionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foreground = color ?? const Color(0xFF3D3330);
+    final palette = AppPalette.of(context);
+    final foreground = color ?? palette.ink;
 
     return InkWell(
       onTap: onTap,
@@ -407,7 +411,7 @@ class _ActionRow extends StatelessWidget {
         decoration: BoxDecoration(
           border: isLast
               ? null
-              : const Border(bottom: BorderSide(color: Color(0xFFF5EBE6))),
+              : Border(bottom: BorderSide(color: palette.divider)),
         ),
         child: Row(
           children: [
@@ -431,7 +435,7 @@ class _ActionRow extends StatelessWidget {
                 ),
               ),
             ),
-            const Icon(Icons.chevron_right, size: 22, color: Color(0xFFBFA79D)),
+            Icon(Icons.chevron_right, size: 22, color: palette.inkIcon),
           ],
         ),
       ),
